@@ -1,5 +1,7 @@
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout'
+import CryptoJS from 'crypto-js'
 import { Head } from "@inertiajs/react"
+import { SECRET_KEY } from '@/helpers'
 
 export default function Home (props) {
 
@@ -8,7 +10,31 @@ export default function Home (props) {
     let user = JSON.parse(localStorage.getItem('user'))
     let id = e.target.innerText
     let dataToSend = {email: user.email, password: user.password }
-    window.location.href = `http://192.168.0.166:8000/login/email=${user.email}&password=${user.password}`
+    let email = CryptoJS.AES.encrypt(user.email, SECRET_KEY).toString()
+    let password = CryptoJS.AES.encrypt(user.password, SECRET_KEY).toString()
+    email = email.replace(/\+/g,'p1L2u3S').replace(/\//g,'s1L2a3S4h').replace(/=/g,'e1Q2u3A4l')
+    password = password.replace(/\+/g,'p1L2u3S').replace(/\//g,'s1L2a3S4h').replace(/=/g,'e1Q2u3A4l')
+    
+    //window.location.href = `http://192.168.0.166:8000/login?kjnuc875e7=${email}&sd8f46qpa0=${password}`
+    window.open(`http://192.168.0.166:8000/login?kjnuc875e7=${email}&sd8f46qpa0=${password}`, "Empresa 1")
+
+    // console.log('email ' + email)
+    // console.log('pass ' + password)
+     
+    // //Desencriptar
+    // let emaild = email.replace(/p1L2u3S/g, '+' ).replace(/s1L2a3S4h/g, '/').replace(/e1Q2u3A4l/g, '=')
+    // let passd = password.replace(/p1L2u3S/g, '+' ).replace(/s1L2a3S4h/g, '/').replace(/e1Q2u3A4l/g, '=')
+     
+    // emaild = CryptoJS.AES.decrypt(emaild, SECRET_KEY)
+    // emaild = emaild.toString(CryptoJS.enc.Utf8)
+
+    // passd = CryptoJS.AES.decrypt(passd, SECRET_KEY)
+    // passd = passd.toString(CryptoJS.enc.Utf8)
+
+    //  console.log('email dec ' + emaild)
+    //  console.log('pass dec ' + passd)
+
+    // window.location.href = `http://192.168.0.166:8000/login/kjnuc875e7=${CryptoJS.AES.encrypt(user.email, SECRET_KEY).toString().replace('+','xMl3Jk').replace('/','Por21Ld').replace('=','Ml32')}&sd8f46qpa0=${CryptoJS.AES.encrypt(user.password, SECRET_KEY).toString().replace('+','xMl3Jk').replace('/','Por21Ld').replace('=','Ml32')}`
     // fetch('http://192.168.0.166:8000/api/empresa/index', {
     //   method: 'POST',
     //   headers: {
