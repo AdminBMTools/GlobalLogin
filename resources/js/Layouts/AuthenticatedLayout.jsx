@@ -1,9 +1,10 @@
-import { useState } from 'react';
-import ApplicationLogo from '@/Components/ApplicationLogo';
-import Dropdown from '@/Components/Dropdown';
-import NavLink from '@/Components/NavLink';
-import ResponsiveNavLink from '@/Components/ResponsiveNavLink';
-import { Link } from '@inertiajs/react';
+import { useState } from 'react'
+import ApplicationLogo from '@/Components/ApplicationLogo'
+import Dropdown from '@/Components/Dropdown'
+import NavLink from '@/Components/NavLink'
+import ResponsiveNavLink from '@/Components/ResponsiveNavLink'
+import { Link } from '@inertiajs/react'
+import { empresa1Url } from '@/helpers'
 
 export default function Authenticated({ auth, header, children }) {
     const [showingNavigationDropdown, setShowingNavigationDropdown] = useState(false);
@@ -57,7 +58,12 @@ export default function Authenticated({ auth, header, children }) {
                                     </Dropdown.Trigger>
 
                                     <Dropdown.Content>
-                                        <Dropdown.Link href={route('logout')} method="post" as="button">
+                                        <button className='w-full px-2 py-1 text-left text-sm' onClick={() => {
+                                            let el = document.getElementById('logoutBtn')
+                                            window.open( `${empresa1Url}/saliendo`, "Empresa 1")
+                                            el.click()
+                                        }}>Cerrar Sesión</button>
+                                        <Dropdown.Link href={route('logout')} method="post" as="button" id='logoutBtn' className='hidden'>
                                             Log Out
                                         </Dropdown.Link>
                                     </Dropdown.Content>
