@@ -5,10 +5,13 @@ import { FilterMatchMode } from 'primereact/api'
 import { Calendar } from 'primereact/calendar'
 import { Dropdown } from 'primereact/dropdown'
 import { InputText } from 'primereact/inputtext'
-import { useState } from 'react'
+import { useState, useRef } from 'react'
+import ShareTask from '../ShareTask'
 
 
 export default function TaskTable ({data, setTrigger, showToast}) {
+  const [ shareData, setShareData ] = useState({})
+  const op = useRef(null)
   const [filters] = useState({
     'incio': { value: null, matchMode: FilterMatchMode.DATE_AFTER },
     'descripcion': { value: null, matchMode: FilterMatchMode.IN },
@@ -59,6 +62,14 @@ export default function TaskTable ({data, setTrigger, showToast}) {
     : rowData.prioridad === 'Media' ? <span className='bg-orange-100 px-4 py-1 border rounded-md text-orange-700 border-orange-700'>Media</span> 
     : rowData.prioridad === 'Alta' ? <span className='bg-red-100 px-4 py-1 border rounded-md text-red-700 border-red-700'>Alta</span>
     : <span className='bg-slate-100 px-4 py-1 border rounded-md text-slate-700 border-slate-700'>No especificada</span>
+  }
+
+  const shareBodyTemplate = (rowData) => {
+    return <button className='rounded-full hover:bg-blue-100' onClick={(e) => {
+      op.current.toggle(e)
+      setShareData(rowData)
+    }} aria-haspopup aria-controls="overlay_panel">
+        <i className='pi pi-share-alt text-blue-500 m-2'></i></button>
   }
 
   //Edit Templates
@@ -142,20 +153,23 @@ export default function TaskTable ({data, setTrigger, showToast}) {
 
   return(
     <>
+      <ShareTask data={shareData} op={op} showToast={showToast}/>
       <DataTable value={data} responsiveLayout="scroll" size='small' editMode='row' dataKey='id' onRowEditComplete={onRowEditComplete}
         rows={20} scrollable style={{fontSize: '0.85rem'}}>
         <Column header='Fecha Inicio' body={dateBodyTemplate} field='fecha_inicio' dataType='date' showFilterMenu={false} 
-        headerStyle={{backgroundColor: 'white'}} editor={(options) => dateEditor(options)}/>
+          headerStyle={{backgroundColor: 'white'}} editor={(options) => dateEditor(options)}/>
         <Column header='Fecha Compromiso' body={dateBodyTemplate2} field='fecha_compromiso' dataType='date' showFilterMenu={false} 
-        headerStyle={{backgroundColor: 'white'}} editor={(options) => dateEditor(options)}/>
+          headerStyle={{backgroundColor: 'white'}} editor={(options) => dateEditor(options)}/>
         <Column header='Descripción' field='descripcion' showFilterMenu={false} headerStyle={{backgroundColor: 'white'}} 
-        editor={(options) => textEditor(options)}/>
+          editor={(options) => textEditor(options)}/>
         <Column header='Progreso' body={progresoBodyTemplate} field='progreso' showFilterMenu={false} className='w-[8rem] mx-auto' 
           headerStyle={{backgroundColor: 'white'}} editor={(options) => progressEditor(options)}/>
         <Column header='Prioridad' body={prioridadBodyTemplate} field='prioridad' showFilterMenu={false} className='w-[8rem] mx-auto' 
           headerStyle={{backgroundColor: 'white'}} editor={(options) => priorityEditor(options)}/>
+        <Column headerStyle={{ width: '10%', minWidth: '8rem', backgroundColor: 'white' }} bodyStyle={{ textAlign: 'center' }}
+          body={shareBodyTemplate}></Column>
         <Column rowEditor headerStyle={{ width: '10%', minWidth: '8rem', backgroundColor: 'white' }} bodyStyle={{ textAlign: 'center' }}
-        className='w-[9rem]'></Column>
+          className='w-[9rem]'></Column>
       </DataTable>
     </>
   )
