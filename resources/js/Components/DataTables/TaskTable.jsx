@@ -9,7 +9,7 @@ import { useState, useRef } from 'react'
 import ShareTask from '../ShareTask'
 
 
-export default function TaskTable ({data, setTrigger, showToast}) {
+export default function TaskTable ({data, setTrigger, showToast, props}) {
   const [ shareData, setShareData ] = useState({})
   const op = useRef(null)
   const [filters] = useState({
@@ -153,7 +153,7 @@ export default function TaskTable ({data, setTrigger, showToast}) {
 
   return(
     <>
-      <ShareTask data={shareData} op={op} showToast={showToast}/>
+      <ShareTask data={shareData} op={op} showToast={showToast} props={props}/>
       <DataTable value={data} responsiveLayout="scroll" size='small' editMode='row' dataKey='id' onRowEditComplete={onRowEditComplete}
         rows={20} scrollable style={{fontSize: '0.85rem'}}>
         <Column header='Fecha Inicio' body={dateBodyTemplate} field='fecha_inicio' dataType='date' showFilterMenu={false} 

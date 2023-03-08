@@ -50,7 +50,7 @@ export default function Task (props) {
           <div className='my-10'></div>
           <AddTask dialog={dialog} setDialog={setDialog} setTrigger={setTrigger} showToast={showToast} props={props} />
           <AsignTask dialogo={dialogo} setDialogo={setDialogo} setTrigger={setTrigger} showToast={showToast} props={props} />
-          <TaskTable data={data} setTrigger={setTrigger} showToast={showToast} />
+          <TaskTable data={data} setTrigger={setTrigger} showToast={showToast} props={props}/>
         </section>
       </AuthenticatedLayout>
     </>

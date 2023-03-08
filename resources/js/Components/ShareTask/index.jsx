@@ -2,12 +2,12 @@ import { OverlayPanel } from 'primereact/overlaypanel'
 import { useEffect, useState } from 'react'
 import { Dropdown } from 'primereact/dropdown'
 
-export default function ShareTask ( {data, op, showToast} ) {
+export default function ShareTask ( {data, op, showToast, props} ) {
   const [ users, setUsers ] = useState([])
   const [ selectedUser, setSelectedUser ] = useState({})
 
   useEffect(() => {
-    fetch('/api/get/user')
+    fetch(`/api/get/shareuser/${props.auth.user.id}`)
       .then(res => res.json())
       .then(el => setUsers(el))
   }, [])

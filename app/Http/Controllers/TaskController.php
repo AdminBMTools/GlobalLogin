@@ -34,8 +34,8 @@ class TaskController extends Controller
         return response()->json($users);
     }
 
-    public function getUser(){
-        $users = DB::table('users')->select('name', 'id')->get();
+    public function shareUser($id){
+        $users = DB::table('users')->select('name', 'id')->where('id', '!=', $id)->get();
         return response()->json($users);
     }
 
