@@ -130,7 +130,7 @@ export default function Task (props) {
             </form>
           </Dialog>
 
-          <TaskTable data={data} />
+          <TaskTable data={data} setTrigger={setTrigger} showToast={showToast} />
         </section>
       </AuthenticatedLayout>
     </>
