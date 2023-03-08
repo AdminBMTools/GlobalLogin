@@ -20,7 +20,7 @@ export default function Task (props) {
 
   const progreso = [ 'No iniciada', 'En proceso', 'Finalizada' ]
   const prioridad = [ 'Baja', 'Media', 'Alta' ]
-
+  
   //Templates
   const progressItemTemplate = (option) => {
     return option === 'En proceso' ? <span className='bg-yellow-100 px-2 py-1 border rounded-md text-yellow-700 border-yellow-700'>En proceso</span>
@@ -92,6 +92,8 @@ export default function Task (props) {
           showToast('success', 'Success', 'Se ha añadido una nueva actividad.')
           setDialog(false)
           setTrigger(true)
+          selectedItem(null)
+          selectedItem2(null)
         })
     }else{
       showToast('info', 'Datos Incompletos', 'Favor de llenar todos los campos del formulario')
@@ -117,7 +119,7 @@ export default function Task (props) {
           <h1 className='my-5 text-center text-2xl text-blue-900'>Lista de actividades</h1>
           <button className='mt-4 mb-10 py-2 px-4 border-2 border-blue-700 text-blue-700 rounded-lg hover:bg-blue-50 w-10/12' 
           onClick={() => setDialog(true)}>Añadir Actividad</button>
-           <Dialog header="Añadir Actividad" visible={dialog} onHide={() => setDialog(false)} breakpoints={{'960px': '75vw'}} style={{width: '50rem'}}>
+          <Dialog header="Añadir Actividad" visible={dialog} onHide={() => setDialog(false)} breakpoints={{'960px': '75vw'}} style={{width: '50rem'}}>
             <form className='p-fluid mt-4' onSubmit={handleSubmit}> 
               <div className='mb-3'><Calendar inputId='inicio' placeholder='Fecha de Inicio' inputStyle={{fontSize: '0.85rem', padding: '.5rem 1rem'}} dateFormat="dd/mm/yy" locale='es'></Calendar></div>
               <div className='mb-3'><Calendar inputId='final' placeholder='Fecha Compromiso' inputStyle={{fontSize: '0.85rem', padding: '.5rem 1rem'}} dateFormat="dd/mm/yy" locale='es'></Calendar></div>
