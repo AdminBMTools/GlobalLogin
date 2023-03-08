@@ -114,12 +114,12 @@ export default function TaskTable ({data, setTrigger, showToast}) {
     let updateData = e.newData
     updateData.fecha_inicio = new Date(updateData.fecha_inicio).toLocaleDateString('es-MX', { day: '2-digit', month: '2-digit', year: 'numeric' })
     updateData.fecha_compromiso = new Date(updateData.fecha_compromiso).toLocaleDateString('es-MX', { day: '2-digit', month: '2-digit', year: 'numeric' })
-    let { id, fecha_inicio, fecha_compromiso, descripcion, prioridad, progreso } = updateData
+    let { id, fecha_inicio, fecha_compromiso, descripcion, comentario, prioridad, progreso } = updateData
     fetch('/api/put/task', {
       method: 'POST',
       credentials: 'same-origin',
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ id, fecha_inicio, fecha_compromiso, descripcion, prioridad, progreso })
+      body: JSON.stringify({ id, fecha_inicio, fecha_compromiso, descripcion, comentario, prioridad, progreso })
     }).then(res => res.json())
       .then(result => {
         showToast('success', 'Success', 'La Actividad fue actualizada con exito')
@@ -161,6 +161,8 @@ export default function TaskTable ({data, setTrigger, showToast}) {
         <Column header='Fecha Compromiso' body={dateBodyTemplate2} field='fecha_compromiso' dataType='date' showFilterMenu={false} 
           headerStyle={{backgroundColor: 'white'}} editor={(options) => dateEditor(options)}/>
         <Column header='Descripción' field='descripcion' showFilterMenu={false} headerStyle={{backgroundColor: 'white'}} 
+          editor={(options) => textEditor(options)}/>
+        <Column header='Comentario' field='comentario' showFilterMenu={false} headerStyle={{backgroundColor: 'white'}} 
           editor={(options) => textEditor(options)}/>
         <Column header='Progreso' body={progresoBodyTemplate} field='progreso' showFilterMenu={false} className='w-[8rem] mx-auto' 
           headerStyle={{backgroundColor: 'white'}} editor={(options) => progressEditor(options)}/>

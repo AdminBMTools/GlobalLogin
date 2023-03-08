@@ -13,7 +13,7 @@ export default function ShareTask ( {data, op, showToast} ) {
   }, [])
 
   const handlerClick = () => {
-    let { fecha_inicio, fecha_compromiso, descripcion, prioridad, progreso } = data
+    let { fecha_inicio, fecha_compromiso, descripcion, comentario, prioridad, progreso } = data
     fecha_inicio = new Date(fecha_inicio).toLocaleDateString('es-MX', { day: '2-digit', month: '2-digit', year: 'numeric' })
     fecha_compromiso = new Date(fecha_compromiso).toLocaleDateString('es-MX', { day: '2-digit', month: '2-digit', year: 'numeric' })
 
@@ -23,7 +23,7 @@ export default function ShareTask ( {data, op, showToast} ) {
         method: 'POST',
         credentials: 'same-origin',
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ id_usuario, fecha_inicio, fecha_compromiso, descripcion, prioridad, progreso })
+        body: JSON.stringify({ id_usuario, fecha_inicio, fecha_compromiso, descripcion, comentario, prioridad, progreso })
       })
         .then(res => res.json())
         .then(response => {
