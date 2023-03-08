@@ -23,11 +23,14 @@ export default function AsignTask ({dialogo, setDialogo, setTrigger, showToast, 
     let status = true
     let datos = {
       id_usuario: selectedUser.id,
+      user_name: selectedUser.name,
+      rol: selectedUser.rol,
       fecha_inicio: document.getElementById('inicio').value,
       fecha_compromiso: document.getElementById('final').value,
       descripcion: document.getElementById('descripcion').value,
       progreso: selectedItem,
-      prioridad: selectedItem2
+      prioridad: selectedItem2,
+      asignacion: props.auth.user.id
     }
     for ( const property in datos ){
       if(datos[property] === '' || datos[property] === null || datos[property] === undefined){

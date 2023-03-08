@@ -15,6 +15,7 @@ export default function AddTask ({dialog, setDialog, setTrigger, showToast, prop
     let status = true
     let datos = {
       id_usuario: props.auth.user.id,
+      user_name: props.auth.user.name,
       fecha_inicio: document.getElementById('inicio').value,
       fecha_compromiso: document.getElementById('final').value,
       descripcion: document.getElementById('descripcion').value,

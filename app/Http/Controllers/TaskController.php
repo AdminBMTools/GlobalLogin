@@ -30,7 +30,7 @@ class TaskController extends Controller
     }
 
     public function getUserByRol($rol){
-        $users = DB::table('users')->select('name', 'id')->where('rol', '>', $rol)->get();
+        $users = DB::table('users')->select('name', 'id', 'rol')->where('rol', '>', $rol)->get();
         return response()->json($users);
     }
 

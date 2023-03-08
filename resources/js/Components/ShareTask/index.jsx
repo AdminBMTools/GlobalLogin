@@ -19,11 +19,13 @@ export default function ShareTask ( {data, op, showToast, props} ) {
 
     if( Object.keys(selectedUser).length > 0 ){
       let id_usuario = selectedUser.id
+      let user_name = selectedUser.name
+      let rol = selectedUser.rol
       fetch('/api/post/task', {
         method: 'POST',
         credentials: 'same-origin',
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ id_usuario, fecha_inicio, fecha_compromiso, descripcion, comentario, prioridad, progreso })
+        body: JSON.stringify({ id_usuario, user_name, fecha_inicio, fecha_compromiso, descripcion, comentario, prioridad, progreso, rol })
       })
         .then(res => res.json())
         .then(response => {
