@@ -20,6 +20,10 @@ Route::get('/', function () {
     return Inertia::render('Home/index');
 })->middleware(['auth', 'verified']);
 
+Route::middleware('auth')->group(function () {
+    Route::get('/tareas', function() { return Inertia::render('Task/index'); });
+});
+
 // Route::get('/dashboard', function () {
 //     return Inertia::render('Dashboard');
 // })->middleware(['auth', 'verified'])->name('dashboard');

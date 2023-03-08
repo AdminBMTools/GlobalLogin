@@ -15,7 +15,7 @@ export default function Home (props) {
     email = email.replace(/\+/g,'p1L2u3S').replace(/\//g,'s1L2a3S4h').replace(/=/g,'e1Q2u3A4l')
     password = password.replace(/\+/g,'p1L2u3S').replace(/\//g,'s1L2a3S4h').replace(/=/g,'e1Q2u3A4l')
     
-    window.location.href = `http://192.168.0.166:8000/login?kjnuc875e7=${email}&sd8f46qpa0=${password}`
+    window.location.href = `${empresa1Url}/login?kjnuc875e7=${email}&sd8f46qpa0=${password}`
   }
 
   return(

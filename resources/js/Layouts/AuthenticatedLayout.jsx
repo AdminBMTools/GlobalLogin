@@ -11,7 +11,7 @@ export default function Authenticated({ auth, header, children }) {
     // console.log(auth);
 
     return (
-        <div className="min-h-screen bg-slate-200">
+        <div className="min-h-screen">
             <nav className="bg-slate-200 border-b border-gray-100">
                 <div className="max-w-8xl mx-auto px-5 sm:px-5 lg:px-10 py-2">
                     <div className="flex justify-between h-16">
