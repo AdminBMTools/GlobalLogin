@@ -2,6 +2,7 @@ import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout'
 import CryptoJS from 'crypto-js'
 import { Head } from "@inertiajs/react"
 import { SECRET_KEY, empresa1Url } from '@/helpers'
+import TaskPanel from '@/Components/TaskPanel'
 
 export default function Home (props) {
 
@@ -31,6 +32,7 @@ export default function Home (props) {
           </div>
         </section>
         <div className='md:place-self-center border-gray-900 mt-5 shadow-lg py-10 px-20 rounded-lg bg-neutral-200'>
+          <TaskPanel props={props} />
           <button className="relative w-full" onClick={handlerClick}>
             <img src="/empresa1.svg" alt="" className="object-cover h-[15rem] w-[35rem] mb-5"/>
             <div className='absolute h-full w-full top-0 rounded-lg bg-[#434656] opacity-70 transition duration-300 ease-out hover:opacity-0'>

@@ -22,6 +22,8 @@ Route::get('/', function () {
 
 Route::middleware('auth')->group(function () {
     Route::get('/tareas', function() { return Inertia::render('Task/index'); });
+    Route::get('/tareas/usuarios', function() { return Inertia::render('RolTask/index'); });
+    Route::get('/tareas/asignadas', function() { return Inertia::render('AsignedTask/index'); });
 });
 
 // Route::get('/dashboard', function () {

@@ -19,9 +19,14 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::get('/get/task/{id}', 'App\Http\Controllers\TaskController@getTask');
+Route::get('/get/asignedtask/{id}', 'App\Http\Controllers\TaskController@getTaskAsigned');
+Route::get('/get/roltask/{rol}', 'App\Http\Controllers\TaskController@getTaskByRol');
+
 Route::post('/post/task', 'App\Http\Controllers\TaskController@postTask');
 Route::post('/put/task', 'App\Http\Controllers\TaskController@putTask');
 Route::get('/get/user/{rol}', 'App\Http\Controllers\TaskController@getUserByRol');
 Route::get('/get/shareuser/{id}', 'App\Http\Controllers\TaskController@shareUser');
 
 Route::post('/post/user', 'App\Http\Controllers\TaskController@postUser');
+
+Route::get('/get/counttask/{id}/{rol}', 'App\Http\Controllers\TaskController@getTaskCount');
