@@ -16,6 +16,7 @@ function LayoutTaskMini ( { url, label, count } ) {
 
 export default function TaskPanel ( {props} ){
   const [ activities, setActivities ] = useState([0, 0, 0])
+  console.log( activities )
   useEffect(() => {
     fetch(`/api/get/counttask/${props.auth.user.id}/${props.auth.user.rol}`)
       .then(res => res.json())
@@ -30,7 +31,7 @@ export default function TaskPanel ( {props} ){
             <LayoutTaskMini url='/tareas/asignadas' label='Actividades Asignadas' count={activities[1]} />
             <LayoutTaskMini url='/tareas/usuarios' label='Actividades de los usuarios' count={activities[2]} />
           </div>
-      </div> : <div className='h-[10rem] my-4'><LayoutTask url='/tareas' /></div> }
+      </div> : <div className='h-[10rem] my-4'><LayoutTask url='/tareas' count={activities[0]} /></div> }
     </>
   )
 }
