@@ -112,8 +112,14 @@ export default function TaskTable ({data, setTrigger, showToast, props}) {
   //Edit 
   const onRowEditComplete = (e) => {
     let updateData = e.newData
-    updateData.fecha_inicio = new Date(updateData.fecha_inicio).toLocaleDateString('es-MX', { day: '2-digit', month: '2-digit', year: 'numeric' })
-    updateData.fecha_compromiso = new Date(updateData.fecha_compromiso).toLocaleDateString('es-MX', { day: '2-digit', month: '2-digit', year: 'numeric' })
+    updateData.fecha_inicio = new Date(updateData.fecha_inicio)
+    updateData.fecha_inicio.setDate(updateData.fecha_inicio.getDate() + 1)
+    updateData.fecha_inicio = updateData.fecha_inicio.toLocaleDateString('es-MX', { day: '2-digit', month: '2-digit', year: 'numeric' })
+
+    updateData.fecha_compromiso = new Date(updateData.fecha_compromiso)
+    updateData.fecha_compromiso.setDate(updateData.fecha_compromiso.getDate() + 1)
+    updateData.fecha_compromiso = updateData.fecha_compromiso.toLocaleDateString('es-MX', { day: '2-digit', month: '2-digit', year: 'numeric' })
+    //updateData.fecha_compromiso = new Date(updateData.fecha_compromiso).toLocaleDateString('es-MX', { day: '2-digit', month: '2-digit', year: 'numeric' })
     let { id, fecha_inicio, fecha_compromiso, descripcion, comentario, prioridad, progreso } = updateData
     fetch('/api/put/task', {
       method: 'POST',
