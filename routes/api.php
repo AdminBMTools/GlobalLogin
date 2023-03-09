@@ -30,3 +30,5 @@ Route::get('/get/shareuser/{id}', 'App\Http\Controllers\TaskController@shareUser
 Route::post('/post/user', 'App\Http\Controllers\TaskController@postUser');
 
 Route::get('/get/counttask/{id}/{rol}', 'App\Http\Controllers\TaskController@getTaskCount');
+
+Route::get('/test/user', 'App\Http\Controllers\TaskController@testUser');

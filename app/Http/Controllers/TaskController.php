@@ -66,4 +66,14 @@ class TaskController extends Controller
         $data[0] = DB::table('tareas')->where('id_usuario', $id)->count();
         return response()->json($data, 200);
     }
+
+    public function testUser () {
+        $users = DB::table('users')->get();
+        foreach ($users as $user) {
+            $task = ["id_usuario" => $user->id, "rol" => $user->rol, "descripcion" => "Revisar Tareas Pendientes", 
+            "progreso" => "No iniciada", "prioridad" => "Alta", "fecha_inicio" => date('Y-m-d'), "fecha_compromiso" => date('Y-m-d')];
+            $data = DB::table('tareas')->insert($task);
+        }
+        return response()->json("Success", 200);
+    }
 }
