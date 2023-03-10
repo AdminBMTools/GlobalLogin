@@ -46,15 +46,13 @@ class Kernel extends ConsoleKernel
                         $data = DB::table('tareas')->insert($taskToAdd);
                     }else if( $task->dia == $actualDay){
                         $taskToAdd = ["id_usuario" => $task->id_usuario, "user_name" => $task->user_name, "rol" => $task->rol_usuario, "descripcion" => $task->descripcion, 
-                                "progreso" => "No iniciada", "prioridad" => "Alta", "fecha_inicio" => date('Y-m-d'), "fecha_compromiso" => date('Y-m-d')];
+                            "progreso" => "No iniciada", "prioridad" => "Alta", "fecha_inicio" => date('Y-m-d'), "fecha_compromiso" => date('Y-m-d')];
                         $data = DB::table('tareas')->insert($taskToAdd);
                     }
-                }else {
-                    if($task->dia == date('n') && $actualDay == '1'){
-                        $taskToAdd = ["id_usuario" => $task->id_usuario, "user_name" => $task->user_name, "rol" => $task->rol_usuario, "descripcion" => $task->descripcion, 
-                                "progreso" => "No iniciada", "prioridad" => "Alta", "fecha_inicio" => date('Y-m-d'), "fecha_compromiso" => date('Y-m-d')];
-                        $data = DB::table('tareas')->insert($taskToAdd);
-                    }
+                }else if($task->dia == date('n') && $actualDay == '1'){
+                    $taskToAdd = ["id_usuario" => $task->id_usuario, "user_name" => $task->user_name, "rol" => $task->rol_usuario, "descripcion" => $task->descripcion, 
+                        "progreso" => "No iniciada", "prioridad" => "Alta", "fecha_inicio" => date('Y-m-d'), "fecha_compromiso" => date('Y-m-d')];
+                    $data = DB::table('tareas')->insert($taskToAdd);
                 }
             }
             $out = new \Symfony\Component\Console\Output\ConsoleOutput();
@@ -68,7 +66,9 @@ class Kernel extends ConsoleKernel
                     "progreso" => "No iniciada", "prioridad" => "Alta", "fecha_inicio" => date('Y-m-d'), "fecha_compromiso" => date('Y-m-d')];
                 $data = DB::table('tareas')->insert($taskToAdd);
             }
-        })->monthly();
+            $out = new \Symfony\Component\Console\Output\ConsoleOutput();
+            $out->writeln('success');
+        })->weeklyOn(1, '0:00');
     }
 
     /**
