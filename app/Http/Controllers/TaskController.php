@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Hash;
 
 class TaskController extends Controller
 {
+    /*Task Methods*/
     public function getTask($id){
         $task = DB::table('tareas')->where('id_usuario', $id)->get();
         return response()->json($task);
@@ -39,6 +40,7 @@ class TaskController extends Controller
         return response()->json(["message" => "Success"], 201);
     }
 
+    /*Users Methods*/
     public function getUserByRol($rol){
         $users = DB::table('users')->select('name', 'id', 'rol')->where('rol', '>', $rol)->get();
         return response()->json($users);
@@ -67,6 +69,14 @@ class TaskController extends Controller
         return response()->json($data, 200);
     }
 
+    /*Current Task Methods*/
+    public function postCurrentTask ( Request $request ) {
+        $data = $request->all();
+        $result = DB::table('tareas_recurrentes')->insert($data);
+        return response()->json(["message" => "Success"], 200);
+    }
+
+    /*Test Mehods*/
     public function testUser () {
         $users = DB::table('users')->get();
         foreach ($users as $user) {

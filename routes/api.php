@@ -31,4 +31,7 @@ Route::post('/post/user', 'App\Http\Controllers\TaskController@postUser');
 
 Route::get('/get/counttask/{id}/{rol}', 'App\Http\Controllers\TaskController@getTaskCount');
 
+/*Current Task*/
+Route::post('/post/currenttask', 'App\Http\Controllers\TaskController@postCurrentTask');
+
 Route::get('/test/user', 'App\Http\Controllers\TaskController@testUser');
