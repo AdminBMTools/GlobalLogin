@@ -17,16 +17,58 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
+        // $schedule->call(function () {
+        //     $users = DB::table('users')->get();
+        //     foreach ($users as $user) {
+        //         $task = ["id_usuario" => $user->id, "user_name" => $user->name, "rol" => $user->rol, "descripcion" => "Revisar Tareas Pendientes 3", 
+        //         "progreso" => "No iniciada", "prioridad" => "Alta", "fecha_inicio" => date('Y-m-d'), "fecha_compromiso" => date('Y-m-d')];
+        //         $data = DB::table('tareas')->insert($task);
+        //     }
+        //     $out = new \Symfony\Component\Console\Output\ConsoleOutput();
+        //     $out->writeln('success');
+        // })->hourlyAt(1);
+
+        // $schedule->call(function () {
+        //     $date = date('H:i:s');
+        //     $out = new \Symfony\Component\Console\Output\ConsoleOutput();
+        //     $out->writeln('GMT-hour: '.$date);
+        // })->everyMinute();
+
         $schedule->call(function () {
-            $users = DB::table('users')->get();
-            foreach ($users as $user) {
-                $task = ["id_usuario" => $user->id, "user_name" => $user->name, "rol" => $user->rol, "descripcion" => "Revisar Tareas Pendientes 2", 
-                "progreso" => "No iniciada", "prioridad" => "Alta", "fecha_inicio" => date('Y-m-d'), "fecha_compromiso" => date('Y-m-d')];
-                $data = DB::table('tareas')->insert($task);
+            $current_task = DB::table('tareas_recurrentes')->where('periodicidad', '!=', 'Semanal')->get();
+            $monthDays = cal_days_in_month(CAL_GREGORIAN, date('n'), date('Y'));
+            $actualDay = date('j');
+            foreach ( $current_task as $task){
+                if( $task->periodicidad == 'Mensual' ){
+                    if($task->dia > $monthDays && $actualDay == $monthDays){
+                        $taskToAdd = ["id_usuario" => $task->id_usuario, "user_name" => $task->user_name, "rol" => $task->rol_usuario, "descripcion" => $task->descripcion, 
+                                "progreso" => "No iniciada", "prioridad" => "Alta", "fecha_inicio" => date('Y-m-d'), "fecha_compromiso" => date('Y-m-d')];
+                        $data = DB::table('tareas')->insert($taskToAdd);
+                    }else if( $task->dia == $actualDay){
+                        $taskToAdd = ["id_usuario" => $task->id_usuario, "user_name" => $task->user_name, "rol" => $task->rol_usuario, "descripcion" => $task->descripcion, 
+                                "progreso" => "No iniciada", "prioridad" => "Alta", "fecha_inicio" => date('Y-m-d'), "fecha_compromiso" => date('Y-m-d')];
+                        $data = DB::table('tareas')->insert($taskToAdd);
+                    }
+                }else {
+                    if($task->dia == date('n') && $actualDay == '1'){
+                        $taskToAdd = ["id_usuario" => $task->id_usuario, "user_name" => $task->user_name, "rol" => $task->rol_usuario, "descripcion" => $task->descripcion, 
+                                "progreso" => "No iniciada", "prioridad" => "Alta", "fecha_inicio" => date('Y-m-d'), "fecha_compromiso" => date('Y-m-d')];
+                        $data = DB::table('tareas')->insert($taskToAdd);
+                    }
+                }
             }
             $out = new \Symfony\Component\Console\Output\ConsoleOutput();
             $out->writeln('success');
-        })->hourlyAt(32);
+        })->daily();
+
+        $schedule->call(function () {
+            $current_task = DB::table('tareas_recurrentes')->where('periodicidad', 'Semanal')->get();
+            foreach($current_task as $task){
+                $taskToAdd = ["id_usuario" => $task->id_usuario, "user_name" => $task->user_name, "rol" => $task->rol_usuario, "descripcion" => $task->descripcion, 
+                    "progreso" => "No iniciada", "prioridad" => "Alta", "fecha_inicio" => date('Y-m-d'), "fecha_compromiso" => date('Y-m-d')];
+                $data = DB::table('tareas')->insert($taskToAdd);
+            }
+        })->monthly();
     }
 
     /**

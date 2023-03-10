@@ -10,17 +10,17 @@ class TaskController extends Controller
 {
     /*Task Methods*/
     public function getTask($id){
-        $task = DB::table('tareas')->where('id_usuario', $id)->get();
+        $task = DB::table('tareas')->where('id_usuario', $id)->orderBy('creado', 'desc')->get();
         return response()->json($task);
     }
 
     public function getTaskByRol($rol){
-        $task = DB::table('tareas')->where('rol', '>', $rol)->get();
+        $task = DB::table('tareas')->where('rol', '>', $rol)->orderBy('creado', 'desc')->get();
         return response()->json($task);
     }
 
     public function getTaskAsigned($id){
-        $task = DB::table('tareas')->where('asignacion', $id)->get();
+        $task = DB::table('tareas')->where('asignacion', $id)->orderBy('creado', 'desc')->get();
         return response()->json($task);
     }
 
@@ -78,12 +78,14 @@ class TaskController extends Controller
 
     /*Test Mehods*/
     public function testUser () {
-        $users = DB::table('users')->get();
-        foreach ($users as $user) {
-            $task = ["id_usuario" => $user->id, "rol" => $user->rol, "descripcion" => "Revisar Tareas Pendientes", 
-            "progreso" => "No iniciada", "prioridad" => "Alta", "fecha_inicio" => date('Y-m-d'), "fecha_compromiso" => date('Y-m-d')];
-            $data = DB::table('tareas')->insert($task);
-        }
-        return response()->json("Success", 200);
+        // $users = DB::table('users')->get();
+        // foreach ($users as $user) {
+        //     $task = ["id_usuario" => $user->id, "rol" => $user->rol, "descripcion" => "Revisar Tareas Pendientes", 
+        //     "progreso" => "No iniciada", "prioridad" => "Alta", "fecha_inicio" => date('Y-m-d'), "fecha_compromiso" => date('Y-m-d')];
+        //     $data = DB::table('tareas')->insert($task);
+        // }
+        // $current_task = DB::table('tareas_recurrentes')->where('periodicidad', '!=', 'Semanal')->get();
+        // return response()->json($current_task, 200);
+        //return response()->json("Success", 200);
     }
 }
