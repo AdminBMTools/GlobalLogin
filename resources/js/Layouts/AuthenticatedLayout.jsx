@@ -3,6 +3,7 @@ import ApplicationLogo from '@/Components/ApplicationLogo'
 import Dropdown from '@/Components/Dropdown'
 import NavLink from '@/Components/NavLink'
 import ResponsiveNavLink from '@/Components/ResponsiveNavLink'
+import Notification from '@/Components/Notification'
 import { Link } from '@inertiajs/react'
 import { empresa1Url } from '@/helpers'
 
@@ -31,6 +32,7 @@ export default function Authenticated({ auth, header, children }) {
                         </div>
 
                         <div className="hidden sm:flex sm:items-center sm:ml-6">
+                            <Notification user_id={auth.user.id} />
                             <div className="ml-3 relative">
                                 <Dropdown>
                                     <Dropdown.Trigger>

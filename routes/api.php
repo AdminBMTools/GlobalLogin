@@ -34,4 +34,8 @@ Route::get('/get/counttask/{id}/{rol}', 'App\Http\Controllers\TaskController@get
 /*Current Task*/
 Route::post('/post/currenttask', 'App\Http\Controllers\TaskController@postCurrentTask');
 
+/*Notificaciones*/
+Route::get('/get/notify/{id}', 'App\Http\Controllers\TaskController@getNotification');
+Route::post('/delete/notify', 'App\Http\Controllers\TaskController@deleteNotification');
+
 Route::get('/test/user', 'App\Http\Controllers\TaskController@testUser');
