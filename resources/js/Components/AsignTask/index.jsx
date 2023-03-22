@@ -3,6 +3,7 @@ import { Dialog } from 'primereact/dialog'
 import { Calendar } from 'primereact/calendar'
 import { Dropdown } from 'primereact/dropdown'
 import { InputTextarea } from 'primereact/inputtextarea'
+import { InputText } from 'primereact/inputtext'
 
 export default function AsignTask ({dialogo, setDialogo, setTrigger, showToast, props}) {
   const [ users, setUsers ] = useState([])
@@ -27,6 +28,7 @@ export default function AsignTask ({dialogo, setDialogo, setTrigger, showToast, 
       rol: selectedUser.rol,
       fecha_inicio: document.getElementById('inicio').value,
       fecha_compromiso: document.getElementById('final').value,
+      titulo: document.getElementById('titulo').value,
       descripcion: document.getElementById('descripcion').value,
       progreso: selectedItem,
       prioridad: selectedItem2,
@@ -101,6 +103,7 @@ export default function AsignTask ({dialogo, setDialogo, setTrigger, showToast, 
       <form className='p-fluid mt-4' onSubmit={handleSubmit}> 
         <div className='mb-3'><Calendar inputId='inicio' placeholder='Fecha de Inicio' inputStyle={{fontSize: '0.85rem', padding: '.5rem 1rem'}} dateFormat="dd/mm/yy" locale='es'></Calendar></div>
         <div className='mb-3'><Calendar inputId='final' placeholder='Fecha Compromiso' inputStyle={{fontSize: '0.85rem', padding: '.5rem 1rem'}} dateFormat="dd/mm/yy" locale='es'></Calendar></div>
+        <div className='mb-3'><InputText id='titulo' placeholder='Titulo' style={{fontSize: '0.85rem', padding: '.5rem 1rem'}}/></div>
         <div className='mb-3'><InputTextarea id='descripcion' placeholder='Descripción' style={{fontSize: '0.85rem', padding: '.5rem 1rem'}} autoResize rows={2}/></div>
         <div className='mb-3'><Dropdown value={selectedItem} options={progreso} placeholder='Progreso' itemTemplate={progressItemTemplate} style={{alignItems: 'center', padding: '0 .3rem'}}
           className="text-sm" panelStyle={{fontSize: '0.85rem'}} valueTemplate={progressValueTemplate} onChange={(e) => setSelectedItem(e.value)}/></div>

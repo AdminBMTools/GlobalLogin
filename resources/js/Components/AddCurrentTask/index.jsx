@@ -3,6 +3,7 @@ import { Dialog } from 'primereact/dialog'
 import { Dropdown } from 'primereact/dropdown'
 import { InputNumber } from 'primereact/inputnumber'
 import { InputTextarea } from 'primereact/inputtextarea'
+import { InputText } from 'primereact/inputtext'
 
 export default function AddCurrentTask ({currentTask, setCurrentTask, setTrigger, showToast, props}) {
   const [ selectedItem, setSelectedItem ] = useState(null)
@@ -26,6 +27,7 @@ export default function AddCurrentTask ({currentTask, setCurrentTask, setTrigger
       id_usuario: props.auth.user.id,
       user_name: props.auth.user.name,
       rol_usuario: props.auth.user.rol,
+      titulo: document.getElementById('titulo').value,
       descripcion: document.getElementById('descripcion').value,
       periodicidad: selectedItem,
       dia: dia
@@ -61,6 +63,7 @@ export default function AddCurrentTask ({currentTask, setCurrentTask, setTrigger
   return (
     <Dialog header="Añadir Actividad" visible={currentTask} onHide={() => setCurrentTask(false)} breakpoints={{'960px': '75vw'}} style={{width: '50rem'}}>
       <form className='p-fluid mt-4' onSubmit={handleSubmit}> 
+        <div className='mb-3'><InputText id='titulo' placeholder='Titulo' style={{fontSize: '0.85rem', padding: '.5rem 1rem'}}/></div>
         <div className='mb-3'><InputTextarea id='descripcion' placeholder='Descripción' style={{fontSize: '0.85rem', padding: '.5rem 1rem'}} autoResize rows={2} required/></div>
         <div className='mb-3'><Dropdown value={selectedItem} options={periodicity} placeholder='Periodicidad' style={{alignItems: 'center', padding: '0 .3rem'}}
           className="text-sm" panelStyle={{fontSize: '0.85rem'}} onChange={(e) => setSelectedItem(e.value)}/></div>

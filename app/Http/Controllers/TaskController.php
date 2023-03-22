@@ -39,9 +39,13 @@ class TaskController extends Controller
 
     public function putTask(Request $request){
         $data = $request->all();
+        $id_user = $data['id_usuario'];
         $data['fecha_inicio'] = substr($data['fecha_inicio'], 6, 9)."-".$data['fecha_inicio'][3].$data['fecha_inicio'][4]."-".$data['fecha_inicio'][0].$data['fecha_inicio'][1];
         $data['fecha_compromiso'] = substr($data['fecha_compromiso'], 6, 9)."-".$data['fecha_compromiso'][3].$data['fecha_compromiso'][4]."-".$data['fecha_compromiso'][0].$data['fecha_compromiso'][1];
         $data = DB::table('tareas')->where('id', $data['id'])->update($data);
+
+        //Put Notification
+        $notify = DB::table('notificaciones')->insert(['id_usuario' => $id_user, 'message' => 'Se modifico una tarea']);
         return response()->json(["message" => "Success"], 201);
     }
 

@@ -114,12 +114,12 @@ export default function AdminTaskTable ({data, setTrigger, showToast, props}) {
     let updateData = e.newData
     updateData.fecha_inicio = new Date(updateData.fecha_inicio).toLocaleDateString('es-MX', { day: '2-digit', month: '2-digit', year: 'numeric' })
     updateData.fecha_compromiso = new Date(updateData.fecha_compromiso).toLocaleDateString('es-MX', { day: '2-digit', month: '2-digit', year: 'numeric' })
-    let { id, fecha_inicio, fecha_compromiso, descripcion, comentario, prioridad, progreso } = updateData
+    let { id, id_usuario, fecha_inicio, fecha_compromiso, titulo, descripcion, comentario, prioridad, progreso } = updateData
     fetch('/api/put/task', {
       method: 'POST',
       credentials: 'same-origin',
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ id, fecha_inicio, fecha_compromiso, descripcion, comentario, prioridad, progreso })
+      body: JSON.stringify({ id, id_usuario, fecha_inicio, titulo, fecha_compromiso, descripcion, comentario, prioridad, progreso })
     }).then(res => res.json())
       .then(result => {
         showToast('success', 'Success', 'La Actividad fue actualizada con exito')
@@ -158,9 +158,11 @@ export default function AdminTaskTable ({data, setTrigger, showToast, props}) {
         rows={20} scrollable style={{fontSize: '0.85rem'}}>
         <Column header='Usuario' field='user_name' showFilterMenu={false}  headerStyle={{backgroundColor: 'white'}}/>
         <Column header='Fecha Inicio' body={dateBodyTemplate} field='fecha_inicio' dataType='date' showFilterMenu={false} 
-          headerStyle={{backgroundColor: 'white'}} editor={(options) => dateEditor(options)}/>
+          headerStyle={{backgroundColor: 'white'}}/>
         <Column header='Fecha Compromiso' body={dateBodyTemplate2} field='fecha_compromiso' dataType='date' showFilterMenu={false} 
           headerStyle={{backgroundColor: 'white'}} editor={(options) => dateEditor(options)}/>
+        <Column header='Titulo' field='titulo' showFilterMenu={false} headerStyle={{backgroundColor: 'white'}} 
+          editor={(options) => textEditor(options)}/>
         <Column header='Descripción' field='descripcion' showFilterMenu={false} headerStyle={{backgroundColor: 'white'}} 
           editor={(options) => textEditor(options)}/>
         <Column header='Comentario' field='comentario' showFilterMenu={false} headerStyle={{backgroundColor: 'white'}} 
@@ -171,8 +173,8 @@ export default function AdminTaskTable ({data, setTrigger, showToast, props}) {
           headerStyle={{backgroundColor: 'white'}} editor={(options) => priorityEditor(options)}/>
         {/* <Column headerStyle={{ width: '10%', minWidth: '8rem', backgroundColor: 'white' }} bodyStyle={{ textAlign: 'center' }}
           body={shareBodyTemplate}></Column> */}
-        {/* <Column rowEditor headerStyle={{ width: '10%', minWidth: '8rem', backgroundColor: 'white' }} bodyStyle={{ textAlign: 'center' }}
-          className='w-[9rem]'></Column> */}
+        <Column rowEditor headerStyle={{ width: '10%', minWidth: '8rem', backgroundColor: 'white' }} bodyStyle={{ textAlign: 'center' }}
+          className='w-[5rem]'></Column>
       </DataTable>
     </>
   )

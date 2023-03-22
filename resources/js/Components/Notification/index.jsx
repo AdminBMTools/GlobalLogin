@@ -55,8 +55,8 @@ export default function Notification ( {user_id} ) {
           <Badge value={numberNotify} severity='danger'></Badge>
         </i>
       </button>
-      <OverlayPanel ref={op} showCloseIcon id='overlay' style={{width: '20rem'}}>
-        <DataTable value={notifications} size='small'>
+      <OverlayPanel ref={op} showCloseIcon id='overlay' style={{width: '20rem'}} onMouseLeave={(e) => op.current.toggle(e)}>
+        <DataTable value={notifications} size='small' emptyMessage="No hay notificaciones">
           <Column field='message'/>
           <Column headerStyle={{ width: '10%', minWidth: '8rem', backgroundColor: 'white' }} bodyStyle={{ textAlign: 'center' }}
           body={readBodyTemplate}></Column>

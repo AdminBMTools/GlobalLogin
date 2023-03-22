@@ -120,12 +120,12 @@ export default function TaskTable ({data, setTrigger, showToast, props}) {
     updateData.fecha_compromiso.setDate(updateData.fecha_compromiso.getDate() + 1)
     updateData.fecha_compromiso = updateData.fecha_compromiso.toLocaleDateString('es-MX', { day: '2-digit', month: '2-digit', year: 'numeric' })
     //updateData.fecha_compromiso = new Date(updateData.fecha_compromiso).toLocaleDateString('es-MX', { day: '2-digit', month: '2-digit', year: 'numeric' })
-    let { id, fecha_inicio, fecha_compromiso, descripcion, comentario, prioridad, progreso } = updateData
+    let { id, fecha_inicio, fecha_compromiso, titulo, descripcion, comentario, prioridad, progreso } = updateData
     fetch('/api/put/task', {
       method: 'POST',
       credentials: 'same-origin',
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ id, fecha_inicio, fecha_compromiso, descripcion, comentario, prioridad, progreso })
+      body: JSON.stringify({ id, fecha_inicio, fecha_compromiso, titulo, descripcion, comentario, prioridad, progreso })
     }).then(res => res.json())
       .then(result => {
         showToast('success', 'Success', 'La Actividad fue actualizada con exito')
@@ -166,17 +166,19 @@ export default function TaskTable ({data, setTrigger, showToast, props}) {
           headerStyle={{backgroundColor: 'white'}} editor={(options) => dateEditor(options)}/>
         <Column header='Fecha Compromiso' body={dateBodyTemplate2} field='fecha_compromiso' dataType='date' showFilterMenu={false} 
           headerStyle={{backgroundColor: 'white'}} editor={(options) => dateEditor(options)}/>
+        <Column header='Titulo' field='titulo' showFilterMenu={false} headerStyle={{backgroundColor: 'white'}} 
+          editor={(options) => textEditor(options)} className='w-[8rem] mx-auto'/>
         <Column header='Descripción' field='descripcion' showFilterMenu={false} headerStyle={{backgroundColor: 'white'}} 
           editor={(options) => textEditor(options)}/>
         <Column header='Comentario' field='comentario' showFilterMenu={false} headerStyle={{backgroundColor: 'white'}} 
           editor={(options) => textEditor(options)}/>
         <Column header='Progreso' body={progresoBodyTemplate} field='progreso' showFilterMenu={false} className='w-[8rem] mx-auto' 
           headerStyle={{backgroundColor: 'white'}} editor={(options) => progressEditor(options)}/>
-        <Column header='Prioridad' body={prioridadBodyTemplate} field='prioridad' showFilterMenu={false} className='w-[8rem] mx-auto' 
+        <Column header='Prioridad' body={prioridadBodyTemplate} field='prioridad' showFilterMenu={false} className='w-[7rem] mx-auto' 
           headerStyle={{backgroundColor: 'white'}} editor={(options) => priorityEditor(options)}/>
-        <Column headerStyle={{ width: '10%', minWidth: '8rem', backgroundColor: 'white' }} bodyStyle={{ textAlign: 'center' }}
+        <Column headerStyle={{ width: '2%', minWidth: '2rem', backgroundColor: 'white' }} bodyStyle={{ textAlign: 'center' }}
           body={shareBodyTemplate}></Column>
-        <Column rowEditor headerStyle={{ width: '10%', minWidth: '8rem', backgroundColor: 'white' }} bodyStyle={{ textAlign: 'center' }}
+        <Column rowEditor headerStyle={{ width: '10%', minWidth: '6rem', backgroundColor: 'white' }} bodyStyle={{ textAlign: 'center' }}
           className='w-[9rem]'></Column>
       </DataTable>
     </>
