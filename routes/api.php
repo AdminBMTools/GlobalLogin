@@ -39,3 +39,6 @@ Route::get('/get/notify/{id}', 'App\Http\Controllers\TaskController@getNotificat
 Route::post('/delete/notify', 'App\Http\Controllers\TaskController@deleteNotification');
 
 Route::get('/test/user', 'App\Http\Controllers\TaskController@testUser');
+
+/*Colaborative Task*/
+Route::post('/post/colaborative', 'App\Http\Controllers\TaskController@postColaborativeTask');

@@ -6,8 +6,16 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 
+use Ramsey\Uuid\Uuid;
+
 class TaskController extends Controller
 {
+    /*Get unique id*/
+    public function generateId()
+    {
+        return (string) Uuid::uuid4();
+    }
+
     /*Task Methods*/
     public function getTask($id){
         $task = DB::table('tareas')->where('id_usuario', $id)->orderBy('creado', 'desc')->get();
@@ -108,5 +116,24 @@ class TaskController extends Controller
         // $current_task = DB::table('tareas_recurrentes')->where('periodicidad', '!=', 'Semanal')->get();
         // return response()->json($current_task, 200);
         //return response()->json("Success", 200);
+    }
+
+    /*Colaborative Task*/
+    public function postColaborativeTask ( Request $request ) {
+        $data = $request->all();
+        $usuarios = $data['users'];
+        $data = $data['datos'];
+        $data['fecha_inicio'] = substr($data['fecha_inicio'], 6, 9)."-".$data['fecha_inicio'][3].$data['fecha_inicio'][4]."-".$data['fecha_inicio'][0].$data['fecha_inicio'][1];
+        $data['fecha_compromiso'] = substr($data['fecha_compromiso'], 6, 9)."-".$data['fecha_compromiso'][3].$data['fecha_compromiso'][4]."-".$data['fecha_compromiso'][0].$data['fecha_compromiso'][1];
+        $data['uuid'] = $this->generateId();
+
+        $result = DB::table('tareas_colaborativas')->insert($data);
+
+        foreach($usuarios as $usuario){
+            DB::table('colaboraciones')->insert(['uuid_tarea' =>  $data['uuid'], 'id_usuario' => $usuario['id']]);
+        }
+       
+        return response()->json(["message" => 'success'], 201);
+
     }
 }
