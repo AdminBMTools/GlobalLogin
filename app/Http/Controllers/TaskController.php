@@ -136,4 +136,25 @@ class TaskController extends Controller
         return response()->json(["message" => 'success'], 201);
 
     }
+
+    public function getColaborativeTask ( $id ){
+        $tareas = [];
+        $user = DB::table('colaboraciones')->where('id_usuario', $id)->get();
+        foreach($user as $el){
+            $tarea = DB::table('tareas_colaborativas')->where('uuid', $el->uuid_tarea)->get();
+            array_push($tareas, ...$tarea);
+        }
+        return response()->json($tareas, 200);
+    }
+
+    public function putColaborativeTask (Request $request){
+        $data = $request->all();
+        $data['fecha_inicio'] = substr($data['fecha_inicio'], 6, 9)."-".$data['fecha_inicio'][3].$data['fecha_inicio'][4]."-".$data['fecha_inicio'][0].$data['fecha_inicio'][1];
+        $data['fecha_compromiso'] = substr($data['fecha_compromiso'], 6, 9)."-".$data['fecha_compromiso'][3].$data['fecha_compromiso'][4]."-".$data['fecha_compromiso'][0].$data['fecha_compromiso'][1];
+        $data = DB::table('tareas_colaborativas')->where('uuid', $data['uuid'])->update($data);
+
+        //Put Notification
+        //$notify = DB::table('notificaciones')->insert(['id_usuario' => $id_user, 'message' => 'Se modifico una tarea']);
+        return response()->json(["message" => "Success"], 200);
+    }
 }

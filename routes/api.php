@@ -42,3 +42,6 @@ Route::get('/test/user', 'App\Http\Controllers\TaskController@testUser');
 
 /*Colaborative Task*/
 Route::post('/post/colaborative', 'App\Http\Controllers\TaskController@postColaborativeTask');
+Route::get('/get/colaborative/{id}', 'App\Http\Controllers\TaskController@getColaborativeTask');
+Route::post('/put/colaborative', 'App\Http\Controllers\TaskController@putColaborativeTask');
+
